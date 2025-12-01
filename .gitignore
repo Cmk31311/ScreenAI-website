@@ -22,3 +22,7 @@ npm-debug.log*
 .env
 .env.local
 .env.*.local
+
+# Distribution files
+*.zip
+*.dmg
