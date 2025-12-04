@@ -1,6 +1,6 @@
-# ScreenAI Website
+# SCAI Website
 
-ScreenAI is a responsive landing page that highlights an AI-powered screen intelligence platform. The site is built using plain HTML, CSS, and vanilla JavaScript—no build tools required—so you can deploy it on any static host in seconds.
+SCAI is a responsive landing page that highlights an AI-powered screen intelligence platform. The site is built using plain HTML, CSS, and vanilla JavaScript—no build tools required—so you can deploy it on any static host in seconds.
 
 ## Features
 
@@ -13,7 +13,7 @@ ScreenAI is a responsive landing page that highlights an AI-powered screen intel
 ## Project Structure
 
 ```
-screenai-website/
+scai-website/
 ├── index.html    # Main page markup
 ├── styles.css    # Global styles, layouts, animations
 └── script.js     # Smooth scrolling + FAQ toggles

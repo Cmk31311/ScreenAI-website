@@ -1,7 +1,7 @@
 {
-  "name": "screenai",
+  "name": "scai",
   "version": "1.0.0",
-  "description": "ScreenAI landing page",
+  "description": "SCAI landing page",
   "scripts": {
     "build": "echo 'No build step required'"
   }
