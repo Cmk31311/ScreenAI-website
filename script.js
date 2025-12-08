@@ -23,63 +23,85 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Initialize animations after a small delay to ensure CSS is loaded
+  // Initialize animations smoothly without flickering
   function initAnimations() {
-    // Intersection Observer for scroll animations
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     
     if (animatedElements.length === 0) return;
-    
-    // Set initial state - elements should be hidden initially
+
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const viewportMargin = 200; // Extra margin for smooth animation start
+
+    // Helper function to check if element is in or near viewport
+    function isInViewport(el) {
+      const rect = el.getBoundingClientRect();
+      return rect.top < viewportHeight + viewportMargin && rect.bottom > -viewportMargin;
+    }
+
+    // Helper function to trigger animation smoothly
+    function triggerAnimation(el) {
+      // Force a reflow to ensure CSS initial state is painted
+      void el.offsetHeight;
+      
+      // Use requestAnimationFrame for smooth transition
+      requestAnimationFrame(() => {
+        el.classList.add('animated');
+      });
+    }
+
+    // Separate elements into visible and below-viewport
+    const visibleElements = [];
+    const belowViewportElements = [];
+
     animatedElements.forEach(el => {
-      // Reset to initial animation state
-      el.style.opacity = '0';
-      if (el.classList.contains('slide-in-up')) {
-        el.style.transform = 'translateY(20px)';
-      } else if (el.classList.contains('slide-in-down')) {
-        el.style.transform = 'translateY(-20px)';
-      } else if (el.classList.contains('slide-in-left')) {
-        el.style.transform = 'translateX(-20px)';
-      } else if (el.classList.contains('slide-in-right')) {
-        el.style.transform = 'translateX(20px)';
-      } else if (el.classList.contains('blur-in')) {
-        el.style.filter = 'blur(8px)';
-        el.style.transform = 'scale(0.99)';
-      } else if (el.classList.contains('fade-in')) {
-        el.style.transform = 'scale(0.98)';
+      if (isInViewport(el)) {
+        visibleElements.push(el);
+      } else {
+        belowViewportElements.push(el);
       }
     });
 
-    // Create Intersection Observer
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          // Trigger animation by removing inline styles and adding animated class
-          el.style.opacity = '';
-          el.style.transform = '';
-          el.style.filter = '';
-          el.classList.add('animated');
-          observer.unobserve(el);
-        }
-      });
-    }, observerOptions);
-
-    // Observe all animated elements
-    animatedElements.forEach(el => {
-      observer.observe(el);
+    // Animate visible elements immediately with slight stagger
+    visibleElements.forEach((el, index) => {
+      // Small delay for smooth staggered animation effect
+      setTimeout(() => {
+        triggerAnimation(el);
+      }, 100 + (index * 80));
     });
+
+    // Create Intersection Observer for elements below viewport
+    if (belowViewportElements.length > 0) {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            triggerAnimation(el);
+            observer.unobserve(el);
+          }
+        });
+      }, observerOptions);
+
+      belowViewportElements.forEach(el => {
+        observer.observe(el);
+      });
+    }
   }
 
-  // Wait for next frame to ensure CSS is loaded
-  requestAnimationFrame(() => {
-    setTimeout(initAnimations, 50);
-  });
+  // Initialize as soon as possible
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      // Use requestAnimationFrame to ensure smooth start
+      requestAnimationFrame(initAnimations);
+    });
+  } else {
+    // DOM ready, initialize on next frame
+    requestAnimationFrame(initAnimations);
+  }
 
   // Waitlist form handling with EmailJS
   const waitlistForm = document.getElementById('waitlist-form');

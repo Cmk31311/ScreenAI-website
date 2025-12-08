@@ -138,27 +138,52 @@ body {
   animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   animation-duration: 0.6s;
   will-change: opacity, transform, filter;
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Initial hidden state for non-animated elements */
-.fade-in:not(.animated),
-.slide-in-up:not(.animated),
-.slide-in-down:not(.animated),
-.slide-in-left:not(.animated),
-.slide-in-right:not(.animated),
-.blur-in:not(.animated) {
+/* When JS is enabled, hide elements by default to prevent flicker */
+.js-enabled .animate-on-scroll:not(.animated) {
   opacity: 0;
+}
+
+/* Set initial transform states based on animation type */
+.js-enabled .slide-in-up:not(.animated) {
+  transform: translateY(20px);
+}
+
+.js-enabled .slide-in-down:not(.animated) {
+  transform: translateY(-20px);
+}
+
+.js-enabled .slide-in-left:not(.animated) {
+  transform: translateX(-20px);
+}
+
+.js-enabled .slide-in-right:not(.animated) {
+  transform: translateX(20px);
+}
+
+.js-enabled .blur-in:not(.animated) {
+  filter: blur(8px);
+  transform: scale(0.99);
+}
+
+.js-enabled .fade-in:not(.animated) {
+  transform: scale(0.98);
 }
 
 /* When animated, elements should be visible and animated */
 .animate-on-scroll.animated {
-  opacity: 1;
-  transform: none;
-  filter: none;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
 }
 
-/* Fallback: if JavaScript is disabled, show elements after a delay */
-.no-js .animate-on-scroll {
+/* Fallback: if JavaScript is disabled, show elements */
+.no-js .animate-on-scroll,
+html:not(.js-enabled) .animate-on-scroll {
   opacity: 1;
   transform: none;
   filter: none;
