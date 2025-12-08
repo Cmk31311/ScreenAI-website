@@ -66,95 +66,103 @@ body {
 /* Scroll Animations */
 @keyframes fadeIn {
   from {
-    transform: scale(0.95);
-    filter: brightness(0.8);
+    opacity: 0;
+    transform: scale(0.98);
   }
   to {
+    opacity: 1;
     transform: scale(1);
-    filter: brightness(1);
   }
 }
 
 @keyframes slideInUp {
   from {
-    transform: translateY(40px);
+    opacity: 0;
+    transform: translateY(20px);
   }
   to {
+    opacity: 1;
     transform: translateY(0);
   }
 }
 
 @keyframes slideInDown {
   from {
-    transform: translateY(-40px);
+    opacity: 0;
+    transform: translateY(-20px);
   }
   to {
+    opacity: 1;
     transform: translateY(0);
   }
 }
 
 @keyframes slideInLeft {
   from {
-    transform: translateX(-40px);
+    opacity: 0;
+    transform: translateX(-20px);
   }
   to {
+    opacity: 1;
     transform: translateX(0);
   }
 }
 
 @keyframes slideInRight {
   from {
-    transform: translateX(40px);
+    opacity: 0;
+    transform: translateX(20px);
   }
   to {
+    opacity: 1;
     transform: translateX(0);
   }
 }
 
 @keyframes blurIn {
   from {
-    filter: blur(10px);
-    transform: scale(0.98);
+    opacity: 0;
+    filter: blur(8px);
+    transform: scale(0.99);
   }
   to {
+    opacity: 1;
     filter: blur(0);
     transform: scale(1);
   }
 }
 
-/* Animation base states - elements start in pre-animation state */
+/* Animation base states */
 .animate-on-scroll {
   animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  animation-duration: 0.8s;
-  transition: transform 0.3s ease, filter 0.3s ease;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-duration: 0.6s;
+  will-change: opacity, transform, filter;
 }
 
-/* Initial states - elements visible but in pre-animation transform state */
-.fade-in:not(.animated) {
-  transform: scale(0.95);
-  filter: brightness(0.8);
-}
-
-.slide-in-up:not(.animated) {
-  transform: translateY(40px);
-}
-
-.slide-in-down:not(.animated) {
-  transform: translateY(-40px);
-}
-
-.slide-in-left:not(.animated) {
-  transform: translateX(-40px);
-}
-
-.slide-in-right:not(.animated) {
-  transform: translateX(40px);
-}
-
+/* Initial hidden state for non-animated elements */
+.fade-in:not(.animated),
+.slide-in-up:not(.animated),
+.slide-in-down:not(.animated),
+.slide-in-left:not(.animated),
+.slide-in-right:not(.animated),
 .blur-in:not(.animated) {
-  filter: blur(10px);
-  transform: scale(0.98);
+  opacity: 0;
+}
+
+/* When animated, elements should be visible and animated */
+.animate-on-scroll.animated {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* Fallback: if JavaScript is disabled, show elements after a delay */
+.no-js .animate-on-scroll {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  animation: none;
 }
 
 /* Fade in animation */

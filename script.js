@@ -23,39 +23,62 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Scroll animations with Intersection Observer
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-
-  const animateOnScroll = (entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-        entry.target.classList.add('animated');
-        observer.unobserve(entry.target);
+  // Initialize animations after a small delay to ensure CSS is loaded
+  function initAnimations() {
+    // Intersection Observer for scroll animations
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    
+    if (animatedElements.length === 0) return;
+    
+    // Set initial state - elements should be hidden initially
+    animatedElements.forEach(el => {
+      // Reset to initial animation state
+      el.style.opacity = '0';
+      if (el.classList.contains('slide-in-up')) {
+        el.style.transform = 'translateY(20px)';
+      } else if (el.classList.contains('slide-in-down')) {
+        el.style.transform = 'translateY(-20px)';
+      } else if (el.classList.contains('slide-in-left')) {
+        el.style.transform = 'translateX(-20px)';
+      } else if (el.classList.contains('slide-in-right')) {
+        el.style.transform = 'translateX(20px)';
+      } else if (el.classList.contains('blur-in')) {
+        el.style.filter = 'blur(8px)';
+        el.style.transform = 'scale(0.99)';
+      } else if (el.classList.contains('fade-in')) {
+        el.style.transform = 'scale(0.98)';
       }
     });
-  };
 
-  const observer = new IntersectionObserver(animateOnScroll, observerOptions);
+    // Create Intersection Observer
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
 
-  // Observe all elements with animation classes
-  const animatedElements = document.querySelectorAll('.animate-on-scroll');
-  animatedElements.forEach(el => {
-    // Check if element is already in viewport (e.g., hero section)
-    const rect = el.getBoundingClientRect();
-    const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
-    
-    if (isInViewport && el.closest('.hero')) {
-      // Animate hero elements immediately on load
-      setTimeout(() => {
-        el.classList.add('animated');
-      }, 100);
-    } else {
-      // Observe other elements for scroll trigger
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          // Trigger animation by removing inline styles and adding animated class
+          el.style.opacity = '';
+          el.style.transform = '';
+          el.style.filter = '';
+          el.classList.add('animated');
+          observer.unobserve(el);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements
+    animatedElements.forEach(el => {
       observer.observe(el);
-    }
+    });
+  }
+
+  // Wait for next frame to ensure CSS is loaded
+  requestAnimationFrame(() => {
+    setTimeout(initAnimations, 50);
   });
 
   // Waitlist form handling with EmailJS
