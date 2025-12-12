@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+
   // Initialize animations smoothly without flickering
   function initAnimations() {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');

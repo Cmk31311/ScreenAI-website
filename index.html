@@ -7,6 +7,9 @@
   <meta name="description" content="SCAI – Where vision becomes understanding. An Electron desktop assistant that captures your screen, runs OCR locally with Tesseract.js, and pipes extracted text to Groq for instant insights and actions." />
   <meta name="theme-color" content="#111111" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Crect x='3' y='3' width='18' height='18' rx='5' stroke='%23FFFFFF' stroke-width='2.5' fill='none'/%3E%3Cline x1='6.5' y1='17.5' x2='17.5' y2='6.5' stroke='%23FFFFFF' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
   <script>
     // Prevent flicker by marking page as JS-enabled immediately
@@ -19,9 +22,9 @@
     <div class="nav-inner">
       <a href="#top" class="logo" aria-label="SCAI home">
         <svg class="logo-mark" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect x="3" y="3" width="18" height="18" rx="5" fill="#1E3A5F" stroke="#D4AF37" stroke-width="1.5"/>
-          <line x1="6" y1="6" x2="20" y2="19" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="18" cy="6" r="2" fill="#D4AF37"/>
+          <rect x="3" y="3" width="18" height="18" rx="5" fill="#0f172a" stroke="#f57c00" stroke-width="1.5"/>
+          <line x1="6" y1="6" x2="20" y2="19" stroke="#f57c00" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="18" cy="6" r="2" fill="#ff9800"/>
         </svg>
         <span class="logo-text">SCAI</span>
       </a>
@@ -36,27 +39,30 @@
 
   <main id="main-content">
     <section class="hero" id="top">
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <p class="badge animate-on-scroll fade-in">Where vision becomes understanding.</p>
-          <h1 class="animate-on-scroll slide-in-up animate-delay-100">AI that reads your screen and explains it</h1>
-          <p class="subtitle animate-on-scroll fade-in animate-delay-200">
-            A desktop assistant that understands whatever is on your screen and explains it instantly with one hotkey.
-          </p>
-          <div class="hero-actions animate-on-scroll slide-in-up animate-delay-300">
-            <a href="#download" class="btn-primary">Get SCAI</a>
-          </div>
-          <p class="hero-note animate-on-scroll fade-in animate-delay-400">
-            Global hotkeys: Ctrl/Cmd + Shift + X (capture) • Ctrl/Cmd + Shift + P (hide/show) • Persistent chat history • File uploads
-          </p>
+      <div class="hero-content">
+        <p class="subtitle">
+          A desktop assistant that understands whatever is on your screen and explains it instantly with one hotkey.
+        </p>
+        <div class="hero-actions">
+          <a href="#download" class="btn-primary modern-btn">
+            <span>Get SCAI</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
         </div>
-        <div class="hero-card animate-on-scroll blur-in animate-delay-200">
-          <div class="hero-card-body">
-            <img src="screen-capture.png" alt="SCAI Application Interface" class="hero-screenshot" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-            <div class="hero-image-placeholder" style="display: none;">
-              <p>Please add <code>screen-capture.png</code> to display the SCAI interface</p>
-            </div>
-          </div>
+      </div>
+    </section>
+
+    <section id="download" class="section alt">
+      <div class="section-inner">
+        <h2 class="animate-on-scroll slide-in-up">Download SCAI</h2>
+        <p class="section-subtitle animate-on-scroll fade-in animate-delay-100">
+          Download the app and start asking questions about what's on your screen.
+        </p>
+        <div class="download-buttons animate-on-scroll slide-in-up animate-delay-200" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+          <a href="https://github.com/Cmk31311/SCAI/releases/download/v1.0.1/SCAI-1.0.0-arm64.dmg" class="btn-primary large" download aria-label="Download for macOS">Download for Mac</a>
+          <a href="https://github.com/Cmk31311/SCAI/releases/download/v1.0.1/SCAI.Setup.1.0.0.exe" class="btn-primary large" download aria-label="Download for Windows">Download for Windows</a>
         </div>
       </div>
     </section>
@@ -161,19 +167,6 @@
             <h3>Local storage &amp; privacy</h3>
             <p>All chat sessions are stored locally in your browser's storage. See exactly what's being sent to Groq so you stay in control of your data.</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="download" class="section alt">
-      <div class="section-inner">
-        <h2 class="animate-on-scroll slide-in-up">Download SCAI</h2>
-        <p class="section-subtitle animate-on-scroll fade-in animate-delay-100">
-          Download the app and start asking questions about what's on your screen.
-        </p>
-        <div class="download-buttons animate-on-scroll slide-in-up animate-delay-200" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
-          <a href="https://github.com/Cmk31311/SCAI/releases/download/v1.0.1/SCAI-1.0.0-arm64.dmg" class="btn-primary large" download aria-label="Download for macOS">Download for Mac</a>
-          <a href="https://github.com/Cmk31311/SCAI/releases/download/v1.0.1/SCAI.Setup.1.0.0.exe" class="btn-primary large" download aria-label="Download for Windows">Download for Windows</a>
         </div>
       </div>
     </section>
